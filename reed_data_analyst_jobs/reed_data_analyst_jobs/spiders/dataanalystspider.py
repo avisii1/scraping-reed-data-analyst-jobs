@@ -1,9 +1,9 @@
 import scrapy
 
-class DataanalystspiderSpider(scrapy.Spider):
+class DataAnalystSpider(scrapy.Spider):
     name = "dataanalystspider"
     allowed_domains = ["www.reed.co.uk"]
-    start_urls = ["https://www.reed.co.uk/jobs/data-analyst-jobs"]
+    start_urls = ["https://www.reed.co.uk/jobs/data-analyst-jobs?hideTrainingJobs=true"]
 
     def parse(self, response):
         base_url = "https://www.reed.co.uk"
@@ -16,7 +16,7 @@ class DataanalystspiderSpider(scrapy.Spider):
             detail_url = base_url + job_card.css('a::attr(href)').get()
             
             # Extracting title
-            title = job_card.css('a::attr(title)').get()
+            title = job_card.css('a::text').get().strip()
 
             # Extracting salary, location, contract type, and job type
             metadata_items = job_card.css('.job-card_jobMetadata__gjkG3 li')
